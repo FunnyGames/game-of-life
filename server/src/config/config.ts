@@ -4,6 +4,7 @@ import morganMiddleware from '../common/morgan';
 import cors from 'cors';
 import compression from 'compression';
 import routes from '../routes';
+import { requestId } from '../middlewares/request-id';
 import env from '../environments/env';
 
 export const configureExpress = (app: Application) => {
@@ -17,6 +18,7 @@ export const configureExpress = (app: Application) => {
     app.use(express.urlencoded({ extended: false }));
     app.use(httpContext.middleware);
     app.use(compression());
+    app.use(requestId);
 }
 
 export const configureRoutes = (app: Application) => {
