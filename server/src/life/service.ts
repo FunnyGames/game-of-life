@@ -12,7 +12,6 @@ const games: LifeGames = {};
 export const newGame = (data: NewGameRequest) => {
     logger.info(`New game - data: ${JSON.stringify(data)}`);
     try {
-
         const id = generateUUID();
         const board: Board = {
             width: data.grid.length,

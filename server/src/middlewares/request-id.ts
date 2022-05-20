@@ -7,6 +7,6 @@ export const requestId = (req: Request, res: Response, next: NextFunction) => {
     if (!reqId) {
         reqId = generateUUID();
     }
-    httpContext.set('request-id', reqId);
+    httpContext.set('requestId', reqId);
     next();
 }
