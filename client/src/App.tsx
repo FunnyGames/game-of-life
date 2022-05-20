@@ -1,14 +1,12 @@
 import React from 'react';
+import ErrorBoundary from './components/ErrorBoundary';
+import GameScreen from './screens/GameScreen';
 
 function App() {
   return (
-    <div>
-      <header style={{ textAlign: 'center' }}>
-        <p>
-          Game of Life
-        </p>
-      </header>
-    </div>
+    <ErrorBoundary>
+      <GameScreen />
+    </ErrorBoundary>
   );
 }
 
