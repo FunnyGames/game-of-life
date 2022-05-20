@@ -1,5 +1,5 @@
 import httpContext from 'express-http-context';
-import express, { Application } from 'express';
+import express, { Application, Request, Response, NextFunction } from 'express';
 import morganMiddleware from '../common/morgan';
 import cors from 'cors';
 import compression from 'compression';
@@ -23,4 +23,9 @@ export const configureExpress = (app: Application) => {
 
 export const configureRoutes = (app: Application) => {
     app.use('/', routes);
+
+    // 404
+    app.use((req: Request, res: Response, next: NextFunction) => {
+        res.status(404).send({ error: 'API not found' });
+    });
 }

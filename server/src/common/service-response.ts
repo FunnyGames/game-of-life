@@ -1,10 +1,10 @@
-type ServuceResponse<T> = {
+export type ServiceResponse<T> = {
     status: number;
     data: T;
 }
 
 export const responseWrapper = <T>(status: number, data: T) => {
-    const responseObject: ServuceResponse<T> = {
+    const responseObject: ServiceResponse<T> = {
         status,
         data,
     };
@@ -19,7 +19,7 @@ export const responseError = <T>(status: number, error: T, details: any = undefi
     if (details) {
         return responseWrapper(status, { error, details });
     }
-    return responseError(status, { error });
+    return responseWrapper(status, { error });
 }
 
 export const SERVER_ERROR = 'Server Error';
