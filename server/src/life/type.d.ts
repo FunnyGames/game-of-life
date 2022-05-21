@@ -3,8 +3,10 @@ import LifeGame from "./game";
 export type Board = {
     width: number;
     height: number;
-    grid: CellState[][];
+    grid: Grid;
 }
+
+export type Grid = CellState[][];
 
 export type CellState = 'alive' | 'dead';
 
@@ -14,6 +16,11 @@ export type LifeGames = {
     [key: string]: LifeGame;
 }
 
-export type NewGameRequest = {
-    grid: CellState[][];
+export type GridRequest = {
+    grid: Grid;
+};
+
+export type GameResponse = {
+    grid: Grid;
+    gameState: GameState;
 };

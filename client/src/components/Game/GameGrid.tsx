@@ -4,15 +4,29 @@ import { CellState, Grid } from '../../types/game';
 
 interface IProps {
     state: CellState;
+    isSelectingElements: boolean;
 }
 
-const GameGrid = ({ grid, onCellClick }: { grid: Grid, onCellClick: (index: number, cellIndex: number) => void }) => {
+const GameGrid = ({
+    grid,
+    onCellClick,
+    isSelectingElements,
+}: {
+    grid: Grid,
+    onCellClick: (index: number, cellIndex: number) => void,
+    isSelectingElements: boolean,
+}) => {
     const gridElements = grid.map((row, index) => {
         return (
             <Row key={`${row}-${index}`}>
                 {
                     row.map((cell, cellIndex) =>
-                        <Cell key={`${row}-${index}-${cell}-${cellIndex}`} state={cell} onClick={() => onCellClick(index, cellIndex)} />
+                        <Cell
+                            key={`${row}-${index}-${cell}-${cellIndex}`}
+                            state={cell}
+                            onClick={() => onCellClick(index, cellIndex)}
+                            isSelectingElements={isSelectingElements}
+                        />
                     )
                 }
             </Row>
@@ -41,7 +55,7 @@ const Cell = styled.span<IProps>`
     width: 1.5vh;
     height: 1.5vh;
     display: flex;
-    cursor: pointer;
+    cursor: ${props => props.isSelectingElements ? 'pointer' : 'normal'};
     margin: 0.5px;
     border-radius: 3px;
 `;

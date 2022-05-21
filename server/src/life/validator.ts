@@ -11,8 +11,8 @@ const HEIGHT = env.boardHeight;
 
 const jGrid = Joi.array().items(Joi.array().items(Joi.string().valid(...cells)).min(HEIGHT).max(HEIGHT)).min(WIDTH).max(WIDTH);
 
-export const newGame = (req: Request, res: Response, next: NextFunction) => {
-    logger.debug(`Validate New Game - request body: ${JSON.stringify(req.body)}`);
+export const nextMove = (req: Request, res: Response, next: NextFunction) => {
+    logger.debug(`Validate next move - request body: ${JSON.stringify(req.body)}`);
     const schema = Joi.object().keys(
         {
             grid: jGrid.required(),

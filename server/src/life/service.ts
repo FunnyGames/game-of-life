@@ -1,63 +1,16 @@
-import { responseSuccess, responseError, SERVER_ERROR, ServiceResponse } from './../common/service-response';
-import { Board, NewGameRequest, LifeGames } from './type';
-import { generateUUID } from '../common/util';
+import { responseSuccess, responseError, SERVER_ERROR } from './../common/service-response';
 import LifeGame from './game';
 import createLogger from '../common/logger';
+import { Grid } from './type';
 const logger = createLogger(__filename);
 
 
-const games: LifeGames = {};
-
-
-export const newGame = (data: NewGameRequest) => {
-    logger.info(`New game - data: ${JSON.stringify(data)}`);
+export const nextMove = (grid: Grid) => {
+    logger.info(`Next move - grid: ${JSON.stringify(grid)}`);
     try {
-        const id = generateUUID();
-        const board: Board = {
-            width: data.grid.length,
-            height: data.grid[0].length,
-            grid: data.grid,
-        };
-        const game = new LifeGame(id, board);
-        games[id] = game;
+        const game = LifeGame.playNextMove(grid);
 
         return responseSuccess(game);
-    } catch (error: any) {
-        logger.error(error.message);
-        return responseError(500, SERVER_ERROR);
-    }
-}
-
-export const nextMove = (id: string) => {
-    logger.info(`Next move - data: ${JSON.stringify(id)}`);
-    try {
-        if (!games[id]) {
-            logger.error(`Game not found - id: ${id}`);
-            return responseError(404, 'Game not found');
-        }
-
-        const game = games[id];
-        game.playNextMove();
-
-        return responseSuccess(game);
-    } catch (error: any) {
-        logger.error(error.message);
-        return responseError(500, SERVER_ERROR);
-    }
-}
-
-export const resetGame = (id: string) => {
-    logger.info(`Next move - data: ${JSON.stringify(id)}`);
-    try {
-        if (!games[id]) {
-            logger.error(`Game not found - id: ${id}`);
-            return responseError(404, 'Game not found');
-        }
-
-        const game = games[id];
-        game.reset();
-
-        return responseSuccess(games[id]);
     } catch (error: any) {
         logger.error(error.message);
         return responseError(500, SERVER_ERROR);

@@ -1,64 +1,45 @@
-import { Board, GameState, CellState } from './type';
+import { GameResponse, GameState, Grid } from './type';
 
 class LifeGame {
-    id: string;
-    state: GameState;
-    board: Board;
-
-    constructor(id: string, board: Board) {
-        this.id = id;
-        this.board = board;
-        this.state = 'active';
+    static createNewGrid(width: number, height: number) {
+        const newGrid: Grid = new Array(width);
+        for (let i = 0; i < width; ++i) {
+            newGrid[i] = new Array(height).fill('dead');
+        }
+        return newGrid;
     }
 
-    playNextMove() {
-        if (this.isBoardFinished()) return false;
-        const { width, height, grid } = this.board;
-        const newGrid: CellState[][] = [];
+    static playNextMove(grid: Grid): GameResponse {
+        const [width, height] = this.getDimensions(grid);
+        const newGrid = this.createNewGrid(width, height);
+
         let aliveCells = 0;
         for (let i = 0; i < width; ++i) {
-            let row: CellState[] = [];
             for (let j = 0; j < height; ++j) {
-                const aliveNeighbors = this.getNumberOfAliveNeighbors(i, j);
+                const aliveNeighbors = this.getNumberOfAliveNeighbors(grid, i, j);
                 let cell = grid[i][j];
-                if (this.isCellDead(cell) && aliveNeighbors === 3) {
-                    row.push('alive');
+                if (cell === 'dead' && aliveNeighbors === 3) {
+                    newGrid[i][j] = 'alive';
                     ++aliveCells;
-                } else if (aliveNeighbors < 2 || aliveNeighbors > 3) {
-                    row.push('dead');
+                } else if (cell === 'alive' && (aliveNeighbors < 2 || aliveNeighbors > 3)) {
+                    newGrid[i][j] = 'dead';
                 } else {
-                    row.push(cell);
+                    newGrid[i][j] = cell;
                     if (cell === 'alive')
                         ++aliveCells;
                 }
             }
-            newGrid.push(row);
         }
-        this.board.grid = newGrid;
-        if (aliveCells === 0) {
-            this.state = 'finish';
-        }
-        return true;
+        const gameState: GameState = aliveCells === 0 ? 'finish' : 'active';
+        const resposne: GameResponse = {
+            grid: newGrid,
+            gameState,
+        };
+        return resposne;
     }
 
-    isBoardActive(): boolean {
-        return this.state === 'active';
-    }
-
-    isBoardFinished(): boolean {
-        return this.state === 'finish';
-    }
-
-    isCellAlive(cell: CellState): boolean {
-        return cell === 'alive';
-    }
-
-    isCellDead(cell: CellState): boolean {
-        return cell === 'dead';
-    }
-
-    getNumberOfAliveNeighbors(i: number, j: number): number {
-        const { width, height, grid } = this.board;
+    static getNumberOfAliveNeighbors(grid: Grid, i: number, j: number): number {
+        const [width, height] = this.getDimensions(grid);
         const minX = Math.max(i - 1, 0);
         const maxX = Math.min(width - 1, i + 1);
         const minY = Math.max(j - 1, 0);
@@ -66,24 +47,36 @@ class LifeGame {
 
         let alive = 0;
 
-        for (let x = minX; x < maxX; ++x) {
-            for (let y = minY; y < maxY; ++y) {
-                if (x === i && y === j) continue;
+        for (let x = minX; x <= maxX; ++x) {
+            for (let y = minY; y <= maxY; ++y) {
                 const cell = grid[x][y];
-                if (this.isCellAlive(cell)) ++alive;
+                if (cell === 'alive') ++alive;
             }
         }
+        if (grid[i][j] === 'alive') --alive; // Do not count the cell that is being tested
 
         return alive;
     }
 
-    reset() {
-        const { width, height, grid } = this.board;
+    static getDimensions(grid: Grid) {
+        if (!grid) return [0, 0];
+        const width = grid.length;
+        if (!grid[0]) return [width, 0];
+        const height = grid[0].length;
+        return [width, height];
+    }
+
+    static print(grid: Grid) {
+        console.log('-------------\nstart\n------------');
+        const [width, height] = this.getDimensions(grid);
         for (let i = 0; i < width; ++i) {
             for (let j = 0; j < height; ++j) {
-                grid[i][j] = 'dead';
+                const c = grid[i][j] === 'alive' ? '*' : '.';
+                process.stdout.write(c);
             }
+            process.stdout.write("\n");
         }
+        console.log('-------------\nfinish\n------------');
     }
 
 }
