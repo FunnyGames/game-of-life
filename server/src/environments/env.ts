@@ -17,7 +17,7 @@ const prod = {
     boardWidth: 50,
     boardHeight: 50,
 
-    origins: /^(http?:\/\/(?:.+\.)?(dima-game-of-life.netlify.app|localhost)(?::\d{1,5})?)$/,
+    origins: /^(https?:\/\/(?:.+\.)?(dima-game-of-life\.netlify\.app|localhost)(?::\d{1,5})?)$/,
 };
 
 let env = dev;
