@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { GameState } from '../../types/game';
 
 const ControlButtons = ({
     playOneStep,
@@ -7,18 +8,21 @@ const ControlButtons = ({
     stopSimulation,
     resetSimulation,
     simulationRunning,
+    gameState,
 }: {
     playOneStep: () => void,
     startSimulation: () => void,
     stopSimulation: () => void,
     resetSimulation: () => void,
     simulationRunning: boolean,
+    gameState: GameState,
 }) => {
+    const gameEnded = gameState === 'finish';
     return (
         <ButtonList>
-            <Button onClick={playOneStep} disabled={simulationRunning}>Next</Button>
-            <Button onClick={startSimulation} disabled={simulationRunning}>Start</Button>
-            <Button onClick={stopSimulation} disabled={!simulationRunning}>Stop</Button>
+            <Button onClick={playOneStep} disabled={simulationRunning || gameEnded}>Next</Button>
+            <Button onClick={startSimulation} disabled={simulationRunning || gameEnded}>Start</Button>
+            <Button onClick={stopSimulation} disabled={!simulationRunning || gameEnded}>Stop</Button>
             <Button onClick={resetSimulation} disabled={simulationRunning}>Reset</Button>
         </ButtonList>
     );

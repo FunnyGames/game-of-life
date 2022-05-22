@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useMutation } from 'react-query';
 import { initNewGameGrid, toggleCell } from '../common/game';
 import Board from '../components/Game/Board';
-import { Grid } from '../types/game';
+import { GameState, Grid } from '../types/game';
 import ControlButtons from '../components/Game/ControlButtons';
 import GameStatistics from '../components/Game/GameStatistics';
 import Popup from '../components/Popup';
@@ -14,7 +14,7 @@ const GameScreen = () => {
     const [isSelectingElements, setIsSelectingElements] = useState(true);
     const [step, setStep] = useState(0);
     const [simulationRunning, setSimulationRunning] = useState(false);
-    const [gameState, setGameState] = useState('active');
+    const [gameState, setGameState] = useState<GameState>('active');
     const [showPopup, setShowPopup] = useState(false);
 
     const nextStepMutation = useMutation(gameApi.nextStep);
@@ -83,6 +83,7 @@ const GameScreen = () => {
                     startSimulation={startSimulation}
                     stopSimulation={stopSimulation}
                     resetSimulation={resetSimulation}
+                    gameState={gameState}
                     simulationRunning={simulationRunning}
                 />
             </Menu>
