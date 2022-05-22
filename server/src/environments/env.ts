@@ -12,16 +12,16 @@ const dev = {
 
 const prod = {
     env: 'prod',
-    port: 8080,
+    port: parseInt(process.env.PORT) || 8080,
 
     boardWidth: 50,
     boardHeight: 50,
 
-    origins: /^(http?:\/\/(?:.+\.)?localhost(?::\d{1,5})?)$/,
+    origins: /^(http?:\/\/(?:.+\.)?(dima-game-of-life.netlify.app|localhost)(?::\d{1,5})?)$/,
 };
 
 let env = dev;
 
-if (process.env.NODE_ENV === 'prod') env = prod;
+if (process.env.NODE_ENV === 'production') env = prod;
 
 export default env;
