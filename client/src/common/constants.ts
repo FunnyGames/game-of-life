@@ -1,3 +1,3 @@
 export const GlobalConstants = {
-    WEB_API: 'https://https://dima-game-of-life-server.herokuapp.com',
+    WEB_API: 'https://dima-game-of-life-server.herokuapp.com',
 };
