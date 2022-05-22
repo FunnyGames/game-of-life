@@ -36,7 +36,6 @@ const GameGrid = ({
 
     return <GameUI>
         {gridElements}
-        {/* <ControlButtons /> */}
     </GameUI>
 }
 

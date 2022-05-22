@@ -15,8 +15,10 @@ export default GameStatistics;
 const View = styled.div`
     display: flex;
     justify-content: center;
+    text-transform: uppercase;
 `;
 
 const InfoView = styled.p`
     margin-right: 30px;
+    font-weight: 500;
 `;

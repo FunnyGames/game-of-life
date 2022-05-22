@@ -6,6 +6,7 @@ import Board from '../components/Game/Board';
 import { Grid } from '../types/game';
 import ControlButtons from '../components/Game/ControlButtons';
 import GameStatistics from '../components/Game/GameStatistics';
+import Popup from '../components/Popup';
 import * as gameApi from '../api/api';
 
 const GameScreen = () => {
@@ -14,6 +15,7 @@ const GameScreen = () => {
     const [step, setStep] = useState(0);
     const [simulationRunning, setSimulationRunning] = useState(false);
     const [gameState, setGameState] = useState('active');
+    const [showPopup, setShowPopup] = useState(false);
 
     const nextStepMutation = useMutation(gameApi.nextStep);
 
@@ -38,7 +40,7 @@ const GameScreen = () => {
                 setGrid(data.grid);
                 setGameState(data.gameState);
                 if (data.gameState === 'finish') {
-                    // TODO: Show popup
+                    setShowPopup(true);
                     if (simulationRunning) {
                         stopSimulation();
                     }
@@ -63,20 +65,28 @@ const GameScreen = () => {
         setStep(0);
         setIsSelectingElements(true);
         setGameState('active');
+        setShowPopup(false);
     }
 
     return (
         <Screen>
             <GameTitle>Game of Life</GameTitle>
-            <Board grid={grid} onCellClick={onCellClick} isSelectingElements={isSelectingElements} />
-            <GameStatistics step={step} gameState={gameState} />
-            <ControlButtons
-                playOneStep={playOneStep}
-                startSimulation={startSimulation}
-                stopSimulation={stopSimulation}
-                resetSimulation={resetSimulation}
-                simulationRunning={simulationRunning}
+            <Popup
+                show={showPopup}
+                onPress={() => setShowPopup(false)}
+                text="There are no more alive cells."
             />
+            <Menu>
+                <GameStatistics step={step} gameState={gameState} />
+                <ControlButtons
+                    playOneStep={playOneStep}
+                    startSimulation={startSimulation}
+                    stopSimulation={stopSimulation}
+                    resetSimulation={resetSimulation}
+                    simulationRunning={simulationRunning}
+                />
+            </Menu>
+            <Board grid={grid} onCellClick={onCellClick} isSelectingElements={isSelectingElements} />
         </Screen>
     );
 }
@@ -89,5 +99,10 @@ const Screen = styled.div`
 
 const GameTitle = styled.div`
     text-align: center;
-    font-family: Kanit;
+    font-size: x-large;
+`;
+
+const Menu = styled.div`
+    display: flex;
+    justify-content: center;
 `;
