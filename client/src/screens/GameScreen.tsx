@@ -32,6 +32,7 @@ const GameScreen = () => {
     }
 
     const playOneStep = () => {
+        if (gameState === 'finish') return;
         if (isSelectingElements) setIsSelectingElements(false);
 
         nextStepMutation.mutate(grid, {
@@ -50,10 +51,12 @@ const GameScreen = () => {
     }
 
     const startSimulation = () => {
+        if (gameState === 'finish') return;
         setSimulationRunning(true);
     }
 
     const stopSimulation = () => {
+        if (gameState === 'finish') return;
         setSimulationRunning(false);
     }
 
