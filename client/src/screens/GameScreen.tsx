@@ -103,7 +103,7 @@ const Screen = styled.div`
 
 const GameTitle = styled.div`
     text-align: center;
-    font-size: x-large;
+    font-size: xxx-large;
 `;
 
 const Menu = styled.div`

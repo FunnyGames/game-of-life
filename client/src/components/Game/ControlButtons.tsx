@@ -32,6 +32,7 @@ export default ControlButtons;
 
 const ButtonList = styled.div`
     align-self: center;
+    font-family: 'Ubuntu', sans-serif;
 `;
 
 const Button = styled.button`
