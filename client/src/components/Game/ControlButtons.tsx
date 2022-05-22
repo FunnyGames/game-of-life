@@ -37,7 +37,7 @@ const ButtonList = styled.div`
 
 const Button = styled.button`
     cursor: ${props => props.disabled ? 'default' : 'pointer'};
-    background-image: ${props => props.disabled ? 'linear-gradient(195deg,#87bfef,#a3c3ed)' : 'linear-gradient(195deg,#49a3f1,#1a73e8)'};
+    background: ${props => props.disabled ? '#0A7275' : '#11a8ab'};
     color: #fff;
     border: 0;
     text-transform: uppercase;

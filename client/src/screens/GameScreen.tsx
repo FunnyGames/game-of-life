@@ -104,9 +104,16 @@ const Screen = styled.div`
 const GameTitle = styled.div`
     text-align: center;
     font-size: xxx-large;
+    color: #fff;
 `;
 
 const Menu = styled.div`
+    color: #fff;
     display: flex;
     justify-content: center;
+    background: #394264;
+    border-radius: 5px;
+    height: 80px;
+    width: 760px;
+    margin: auto auto 10px auto;
 `;

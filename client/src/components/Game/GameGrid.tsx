@@ -50,11 +50,10 @@ const Row = styled.div`
 `;
 
 const Cell = styled.span<IProps>`
-    background-color: ${props => props.state === 'dead' ? 'lightgray' : 'black'};
+    background-color: ${props => props.state === 'dead' ? '#9099b7' : '#e64c65'};
     width: 1.5vh;
     height: 1.5vh;
     display: flex;
     cursor: ${props => props.isSelectingElements ? 'pointer' : 'normal'};
     margin: 0.5px;
-    border-radius: 3px;
 `;

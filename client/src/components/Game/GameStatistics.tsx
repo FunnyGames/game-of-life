@@ -14,7 +14,7 @@ export default GameStatistics;
 
 const View = styled.div`
     display: flex;
-    justify-content: center;
+    align-items: center;
     text-transform: uppercase;
 `;
 
